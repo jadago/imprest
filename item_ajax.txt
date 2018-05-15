@@ -1,0 +1,22 @@
+<?php
+require_once('includes/db_conn.php');
+$requisition_id = $_GET['requisition_id'];
+$choose = "SELECT * FROM requisition_detail WHERE requisition_id='".$requisition_id."'";
+$querychoose = mysqli_query($con,$choose);
+$arraychoose = mysqli_fetch_array($querychoose);
+
+//get Item Names
+$item = $arraychoose['item'];
+$requested = $arraychoose['requested_quantity'];
+
+//get items name
+
+$name = "SELECT * FROM item WHERE id='".$item."'";
+$queryname = mysqli_query($con,$name);
+$arrayname = mysqli_fetch_array($queryname);
+
+$itemname = $arrayname['item_name'];
+
+$response = array('itemName'=>$itemname,'quantity'=>$requested);
+echo json_encode($response);
+?>
